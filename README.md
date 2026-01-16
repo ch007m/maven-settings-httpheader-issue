@@ -40,3 +40,7 @@ is generated as such a string during jackson serialization
 ```
 
 The problem is certainly occurring with the Java class definition of `MavenSettingsSimplified` !
+
+## Usefull links
+
+https://stackoverflow.com/questions/76575998/jackson-xmlmapper-xml-serialization-of-java-map-with-wrapper-entry-element
