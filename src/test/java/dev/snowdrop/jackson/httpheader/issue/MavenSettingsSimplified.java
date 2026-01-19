@@ -120,6 +120,12 @@ public class MavenSettingsSimplified {
     }
 
     public static class ServerConfiguration {
+
+        private @Nullable List<HttpHeader> httpHeaders;
+        private @Nullable Long timeout;
+
+        public ServerConfiguration() {}
+
         @JacksonXmlProperty(
             localName = "property"
         )
@@ -127,16 +133,6 @@ public class MavenSettingsSimplified {
             localName = "httpHeaders",
             useWrapping = true
         )
-        @JsonIgnore
-        private final @Nullable List<HttpHeader> httpHeaders;
-        private final @Nullable Long timeout;
-
-        @JsonCreator
-        public ServerConfiguration(@JsonProperty("httpHeaders") @Nullable List<HttpHeader> httpHeaders, @JsonProperty("timeout") @Nullable Long timeout) {
-            this.httpHeaders = httpHeaders;
-            this.timeout = timeout;
-        }
-
         public @Nullable List<HttpHeader> getHttpHeaders() {
             return this.httpHeaders;
         }
@@ -145,12 +141,12 @@ public class MavenSettingsSimplified {
             return this.timeout;
         }
 
-        public ServerConfiguration withHttpHeaders(final @Nullable List<HttpHeader> httpHeaders) {
-            return this.httpHeaders == httpHeaders ? this : new ServerConfiguration(httpHeaders, this.timeout);
+        public void setHttpHeaders(@Nullable List<HttpHeader> httpHeaders) {
+            this.httpHeaders = httpHeaders;
         }
 
-        public ServerConfiguration withTimeout(final @Nullable Long timeout) {
-            return this.timeout == timeout ? this : new ServerConfiguration(this.httpHeaders, timeout);
+        public void setTimeout(@Nullable Long timeout) {
+            this.timeout = timeout;
         }
     }
 
