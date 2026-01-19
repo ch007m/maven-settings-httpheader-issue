@@ -64,6 +64,7 @@ public class SimpleSettingsXmlTest {
                 .withCreatorVisibility(JsonAutoDetect.Visibility.PUBLIC_ONLY));
 
         MavenSettingsSimplified settings = m.readValue(settingsXml, MavenSettingsSimplified.class);
+
         Assertions.assertNotNull(settings.getServers());
         MavenSettingsSimplified.Server server = settings.getServers().getServers().getFirst();
         Assertions.assertNotNull(server.getConfiguration().getHttpHeaders());
@@ -84,7 +85,6 @@ public class SimpleSettingsXmlTest {
                       <value>myApiToken</value>
                     </property>
                   </httpHeaders>
-                  <timeout>10000</timeout>
                 </configuration>
               </server>
             </servers>
@@ -92,7 +92,9 @@ public class SimpleSettingsXmlTest {
           """;
 
         MavenSettingsSimplified.HttpHeader httpHeader = new MavenSettingsSimplified.HttpHeader("X-JFrog-Art-Api", "myApiToken");
-        MavenSettingsSimplified.ServerConfiguration configuration = new MavenSettingsSimplified.ServerConfiguration(singletonList(httpHeader), 10000L);
+        MavenSettingsSimplified.ServerConfiguration configuration = new MavenSettingsSimplified.ServerConfiguration();
+        configuration.setHttpHeaders(singletonList(httpHeader));
+
         MavenSettingsSimplified.Server server = new MavenSettingsSimplified.Server("maven-snapshots", null, null, configuration);
         MavenSettingsSimplified.Servers servers = new MavenSettingsSimplified.Servers(singletonList(server));
         MavenSettingsSimplified settings = new MavenSettingsSimplified(servers);
